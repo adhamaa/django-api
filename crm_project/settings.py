@@ -9,8 +9,14 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()  # take environment variables from .env.
+
+# Code of your application, which uses environment variables (e.g. from `os.environ` or
+# `os.getenv`) as if they came from the actual environment.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7!%*_%*0x9*#-k*1$b$^dax14hu2tazzrvk5tvj@#7vlg*h0ni'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,10 +84,10 @@ WSGI_APPLICATION = 'crm_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydb',
-        'USER': 'myuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'NAME': str(os.getenv('DB_NAME')),
+        'USER': str(os.getenv('DB_USER')),
+        'PASSWORD': str(os.getenv('DB_PASSWORD')),
+        'HOST': str(os.getenv('DB_HOST')),
         'PORT': '',
     }
 }
